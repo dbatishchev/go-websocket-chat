@@ -3,17 +3,12 @@ const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const ExtractMainCSS = new ExtractTextPlugin('style.css', {
-    allChunks: true,
-});
+const ExtractMainCSS = new ExtractTextPlugin({ filename: 'style.css', allChunks: true });
 
 const plugins = [
     new HtmlWebpackPlugin({
         template: 'client/index.html',
         hash: true,
-    }),
-    new ExtractTextPlugin('[name].css', {
-        allChunks: true,
     }),
     ExtractMainCSS,
 ];
@@ -26,23 +21,23 @@ if (process.env.NODE_ENV === 'production') {
 const webpackConfig = {
     entry: './client/src/index.js',
     output: {
-        path: 'public',
+        path: __dirname + '/public',
         filename: 'bundle.js',
     },
     resolve: {
-        modulesDirectories: [path.resolve(__dirname, 'client/src'), 'node_modules'],
+        modules: [path.resolve(__dirname, 'client/src'), 'node_modules'],
     },
     module: {
         loaders: [
             {
                 test: /\.js$/,
-                loader: 'babel',
+                loader: 'babel-loader',
                 exclude: [/node_modules/],
             },
 
             {
                 test: /\.scss$/,
-                loader: ExtractMainCSS.extract('css!sass'),
+                loader: ExtractMainCSS.extract('css-loader!sass-loader'),
             },
             {
                 test: /\.(jpg|jpeg|gif|png)$/,
