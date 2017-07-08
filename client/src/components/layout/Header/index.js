@@ -1,20 +1,52 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+
+import styles from './index.scss';
 
 export default class Header extends Component {
-    render() {
+
+    static propTypes = {
+        user: PropTypes.object,
+    };
+
+    /**
+     * @param {User} user
+     * @returns {XML}
+     */
+    static renderUserPanel(user) {
         return (
-            <nav className="navbar navbar--header hidden-print">
-                <div className="navbar-container">
-                    <div className="navbar-header">
-                        <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                            <span className="sr-only">Toggle navigation</span>
-                            <span className="icon-bar" />
-                            <span className="icon-bar" />
-                            <span className="icon-bar" />
-                        </button>
-                    </div>
+            <div className="user-panel pull-right">
+                <div className="user-panel__avatar">
+                    <img src={user.avatar_url} />
                 </div>
-            </nav>
+                <div className="user-panel__username">
+                    {user.name}
+                </div>
+            </div>
+        );
+    }
+
+    /**
+     * @returns {XML}
+     */
+    static renderLoginButtons() {
+        return (
+            <ul className="nav nav-pills pull-right">
+                <li role="presentation"><a href="/login">Login</a></li>
+            </ul>
+        );
+    }
+
+    render() {
+        const user = this.props.user;
+
+        return (
+            <div className="header clearfix">
+                <nav>
+                    { user ? Header.renderUserPanel(user) : Header.renderLoginButtons() }
+                </nav>
+                <h3 className="text-muted">Golang Websocket Chat</h3>
+            </div>
         );
     }
 }

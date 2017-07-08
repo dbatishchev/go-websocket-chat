@@ -1,0 +1,14 @@
+.user-panel {
+  &__avatar {
+    display: inline-block;
+    margin: 0 10px 0 0;
+
+    img {
+      max-width: 32px;
+      max-height: 32px;
+    }
+  }
+  &__username {
+    display: inline-block;
+  }
+}

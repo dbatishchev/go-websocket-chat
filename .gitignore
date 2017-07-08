@@ -3,3 +3,4 @@ public/
 npm-debug.log
 junitresults/
 coverage/
+server/config.json
